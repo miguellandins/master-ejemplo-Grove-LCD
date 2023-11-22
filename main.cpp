@@ -6,9 +6,14 @@
 #include "mbed.h"
 #include "Grove_LCD_RGB_Backlight.h"
 
-#define WAIT_TIME_MS 500 
+#define WAIT_TIME_MS 1000 
 DigitalOut led1(LED1);
+AnalogIn Vout(A0);
 Grove_LCD_RGB_Backlight rgbLCD(PB_9,PB_8);
+float Rntc ;
+float T;
+char mensaje[16];
+
 
 int main()
 {
@@ -16,9 +21,17 @@ int main()
 
     while (true)
     {
-        rgbLCD.setRGB(0xff, 0xff, 0xff);                 //set the color 
-        rgbLCD.print("Hello World!");
-        led1 = !led1;
+
+        Rntc=((5.0*100.0)/(3.3*Vout))-100.0; // sacamos la resitencia de temperatura
+        T = (4250.0/(log(100.0/Rntc)+(4250.0/298.0)))-273; // sacamos la temprestura
+
+
+        rgbLCD.setRGB(0xff, 0xff, 0xff);                 //set the color azul
+        rgbLCD.locate(0,0);
+        rgbLCD.print("Temperatura");
+        rgbLCD.locate(0,1);
+        sprintf(mensaje,"%f",T);
+        rgbLCD.print(mensaje);
         thread_sleep_for(WAIT_TIME_MS);
     }
 }
