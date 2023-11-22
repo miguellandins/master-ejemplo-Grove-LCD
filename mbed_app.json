@@ -4,7 +4,7 @@
       "*": {
         "target.c_lib": "small",
         "target.printf_lib": "minimal-printf",
-        "platform.minimal-printf-enable-floating-point": true,
+        "platform.minimal-printf-enable-floating-point": true, // super importante este cambio, porque si no no puede hacer prints en coma flotante.
         "platform.stdio-minimal-console-only": true
       }
     }
